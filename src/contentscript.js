@@ -1,8 +1,32 @@
 'use strict';
 
 const SOURCE_URL = 'https://search-api.epfl.ch/api/ldap';
+const MAP_URL = 'https://plan.epfl.ch/iframe/?map_zoom=10';
 
-function findEmailInPeople () {
+function injectSciper (sciper) {
+  const h1s = document.getElementsByTagName('h1');
+  h1s[1].innerText += ` #${sciper}`;
+}
+
+function injectMaps (user) {
+  for (const accred in user.accreds) {
+    if (user.accreds[accred].officeList.length) {
+      for (const office of user.accreds[accred].officeList) {
+        document.getElementById(`collapse-${accred}`).innerHTML +=
+          `<div>
+            <iframe
+              id="epfl-map-${accred}"
+              height="350px"
+              width="100%"
+              src="${MAP_URL}&room==${office}">
+            </iframe>
+          </div>`;
+      }
+    }
+  }
+}
+
+function findEmail () {
   var mails = document.querySelectorAll('a[href^=mailto]');
   if (mails[0]) {
     return mails[0].innerText;
@@ -10,30 +34,26 @@ function findEmailInPeople () {
   return false;
 };
 
-function getPeopleInfo (email) {
+async function getPeopleFromSearchAPI (email) {
   const headers = new Headers({ Accept: 'application/json' });
   const init = { method: 'GET', headers };
   const url = `${SOURCE_URL}?q=${email}`;
   const request = new Request(url, init);
 
-  fetch(request).then(injectSciper);
+  const response = await fetch(request); // .then(extractInfo);
+  const users = await response.json();
+  return users;
 };
 
-function injectSciper (response) {
-  response.json().then(json => {
-    if (json[0] && json[0].sciper) {
-      const h1s = document.getElementsByTagName('h1');
-      const name = h1s[1].innerText;
-      h1s[1].innerText = name + ' #' + json[0].sciper;
-    }
-  });
-};
-
-function addSciperAfterName (sciper) {
-  var email = findEmailInPeople();
+async function enhancePeople () {
+  var email = findEmail();
   if (email) {
-    getPeopleInfo(email);
+    const users = await getPeopleFromSearchAPI(email);
+    if (users[0]) {
+      injectSciper(users[0].sciper);
+      injectMaps(users[0]);
+    }
   }
 };
 
-addSciperAfterName();
+enhancePeople();
