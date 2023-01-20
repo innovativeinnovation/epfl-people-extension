@@ -1,3 +1,8 @@
+/*
+ * (c) William Belle, 2023.
+ * See the LICENSE file for more details.
+ */
+
 'use strict';
 
 const PEOPLE_URL = 'https://people.epfl.ch';

@@ -1,3 +1,8 @@
+/*
+ * (c) William Belle, 2023.
+ * See the LICENSE file for more details.
+ */
+
 'use strict';
 
 const SOURCE_URL = 'https://search-api.epfl.ch/api/ldap';
@@ -40,7 +45,7 @@ async function getPeopleFromSearchAPI (email) {
   const url = `${SOURCE_URL}?q=${email}`;
   const request = new Request(url, init);
 
-  const response = await fetch(request); // .then(extractInfo);
+  const response = await fetch(request);
   const users = await response.json();
   return users;
 };
