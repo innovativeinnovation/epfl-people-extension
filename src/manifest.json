@@ -1,0 +1,20 @@
+{
+  "name": "EPFL People",
+  "description": "A WebExtension to improve EPFL People.",
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "54.0"
+    }
+  },
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "omnibox": {
+    "keyword": "p"
+  }
+}
