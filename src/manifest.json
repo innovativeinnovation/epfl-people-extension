@@ -8,6 +8,16 @@
       "strict_min_version": "54.0"
     }
   },
+  "content_scripts": [{
+    "js": [
+      "contentscript.js"
+    ],
+    "matches": [
+      "*://people.epfl.ch/*",
+      "*://personnes.epfl.ch/*"
+    ],
+    "run_at": "document_end"
+  }],
   "background": {
     "persistent": false,
     "scripts": [
