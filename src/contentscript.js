@@ -1,6 +1,8 @@
 /*
  * (c) William Belle, 2023.
  * See the LICENSE file for more details.
+ *
+ * See  https://github.com/ponsfrilus/EPFL_People_UserScript
  */
 
 'use strict';

@@ -12,7 +12,7 @@ cd epfl-people-extension
 npm i
 ```
 
-## Test-
+## Test
 
 ```bash
 # Lint JS
