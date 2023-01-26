@@ -22,7 +22,7 @@ npm t
 npm run validate
 ```
 
-# Run
+## Run
 
 ```bash
 npm run start:chrome
